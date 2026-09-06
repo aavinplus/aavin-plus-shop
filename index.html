@@ -55,10 +55,10 @@ header{background:radial-gradient(circle at 88% 10%,#ff4fa3 0 3%,transparent 18%
 .login h2{color:#0967c7!important}
 @media(max-width:700px){.card .photo{height:175px}.hero-logo{width:100px!important;height:88px!important}.brand-logo{width:58px!important;height:52px!important}}
 </style></head><body>
-<header><div class="wrap"><div class="brand"><div class="logo"><img class="brand-logo" src="assets/aavin-plus-logo.png" alt="Aavin Plus"></div><div><h1>Aavin Plus</h1><div class="tag">Online Shopping • Home Delivery</div></div></div>
+<header><div class="wrap"><div class="brand"><div class="logo"><img class="brand-logo" src="aavin-plus-logo.png" alt="Aavin Plus"></div><div><h1>Aavin Plus</h1><div class="tag">Online Shopping • Home Delivery</div></div></div>
 <input id="search" class="search" placeholder="🔎 பொருளை தேடுங்கள்..."></div></header>
 <div id="shop" class="wrap">
-<div class="hero"><img class="hero-logo" src="assets/aavin-plus-logo.png" alt="Aavin Plus"><div class="eyebrow">AAVIN PLUS • ONLINE SHOPPING</div><h2>Fresh dairy.<br>Delivered to your doorstep.</h2><p>உங்களுக்கு பிடித்த பால் மற்றும் பால் பொருட்களை எளிதாக ஆர்டர் செய்யுங்கள்.</p><span class="hero-pill">🚚 Home Delivery • 📲 WhatsApp Order</span></div>
+<div class="hero"><img class="hero-logo" src="aavin-plus-logo.png" alt="Aavin Plus"><div class="eyebrow">AAVIN PLUS • ONLINE SHOPPING</div><h2>Fresh dairy.<br>Delivered to your doorstep.</h2><p>உங்களுக்கு பிடித்த பால் மற்றும் பால் பொருட்களை எளிதாக ஆர்டர் செய்யுங்கள்.</p><span class="hero-pill">🚚 Home Delivery • 📲 WhatsApp Order</span></div>
 <div class="chips"><button class="on" onclick="setCat('all',this)">அனைத்தும்</button><button onclick="setCat('aavin',this)">🥛 Aavin</button><button onclick="setCat('heritage',this)">🐄 Heritage</button></div>
 <div class="section-head"><h3>✨ Special for You</h3><span>Fresh • Quality • Trusted</span></div>
 <div class="offers"><div class="offer green"><strong>🚚 Home Delivery</strong><small>மல்லாங்கிணறு பகுதியில் எளிய டெலிவரி</small><span class="ico">🛵</span></div><div class="offer gold"><strong>📲 Easy WhatsApp Order</strong><small>Cart-ல் சேர்த்து ஒரே click-ல் order செய்யலாம்</small><span class="ico">💬</span></div></div>
@@ -131,23 +131,23 @@ onAuthStateChanged(auth,user=>{ firebaseUser=user; });
 const DEFAULT_PRODUCTS=[{"cat":"aavin","name":"ஆவின் டிலைட்","size":"200 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டிலைட்","size":"500 மிலி","price":22,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் கோல்டு","size":"500 மிலி","price":28,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"500 மிலி","price":34,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"1000 மிலி","price":68,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"140 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"500 கிராம்","price":35,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"100 கிராம்","price":85,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"200 கிராம்","price":160,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"500 கிராம்","price":365,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"1000 கிராம்","price":700,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"110 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"500 மிலி","price":39,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"1000 மிலி","price":77,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் Golden Cow Milk","size":"500 மிலி","price":26,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"130 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"500 கிராம்","price":38,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"1000 கிராம்","price":80,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200+200 காம்போ","price":190,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பட்டர்","size":"100 கிராம்","price":65,"emoji":"🧈","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் மோர்","size":"","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"100 கிராம்","price":100,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"200 கிராம்","price":190,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"500 கிராம்","price":440,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"1000 கிராம்","price":880,"emoji":"🫙","active":true}];let products=JSON.parse(localStorage.getItem('aavin_products_v6')||'null')||DEFAULT_PRODUCTS;
 let cart={},current='all';
 const PRODUCT_IMAGES={
-  "ஆவின் டிலைட்|200 மிலி":"assets/aavin-delite.png",
-  "ஆவின் டிலைட்|500 மிலி":"assets/aavin-delite.png",
-  "ஆவின் கோல்டு|500 மிலி":"assets/aavin-gold.png",
-  "ஆவின் டீமேட்|500 மிலி":"assets/aavin-tea-mate.png",
-  "ஆவின் டீமேட்|1000 மிலி":"assets/aavin-tea-mate.png",
-  "ஆவின் தயிர்|140 கிராம்":"assets/aavin-curd.png",
-  "ஆவின் தயிர்|500 கிராம்":"assets/aavin-curd.png",
-  "ஆவின் பனீர்|200 கிராம்":"assets/aavin-paneer.png",
-  "ஆவின் நெய்|100 கிராம்":"assets/aavin-ghee.png",
-  "ஆவின் நெய்|200 கிராம்":"assets/aavin-ghee.png",
-  "ஆவின் நெய்|500 கிராம்":"assets/aavin-ghee.png",
-  "ஆவின் நெய்|1000 கிராம்":"assets/aavin-ghee.png",
-  "ஹெரிடேஜ் FCM|110 மிலி":"assets/heritage-fcm-110.png",
-  "ஹெரிடேஜ் FCM|1000 மிலி":"assets/heritage-fcm-1000.png",
-  "ஹெரிடேஜ் Golden Cow Milk|500 மிலி":"assets/heritage-golden-cow.png",
-  "ஹெரிடேஜ் தயிர்|500 கிராம்":"assets/heritage-curd.png",
-  "ஹெரிடேஜ் பனீர்|200 கிராம்":"assets/heritage-paneer.png"
+  "ஆவின் டிலைட்|200 மிலி":"aavin-delite.png",
+  "ஆவின் டிலைட்|500 மிலி":"aavin-delite.png",
+  "ஆவின் கோல்டு|500 மிலி":"aavin-gold.png",
+  "ஆவின் டீமேட்|500 மிலி":"aavin-tea-mate.png",
+  "ஆவின் டீமேட்|1000 மிலி":"aavin-tea-mate.png",
+  "ஆவின் தயிர்|140 கிராம்":"aavin-curd.png",
+  "ஆவின் தயிர்|500 கிராம்":"aavin-curd.png",
+  "ஆவின் பனீர்|200 கிராம்":"aavin-paneer.png",
+  "ஆவின் நெய்|100 கிராம்":"aavin-ghee.png",
+  "ஆவின் நெய்|200 கிராம்":"aavin-ghee.png",
+  "ஆவின் நெய்|500 கிராம்":"aavin-ghee.png",
+  "ஆவின் நெய்|1000 கிராம்":"aavin-ghee.png",
+  "ஹெரிடேஜ் FCM|110 மிலி":"heritage-fcm-110.png",
+  "ஹெரிடேஜ் FCM|1000 மிலி":"heritage-fcm-1000.png",
+  "ஹெரிடேஜ் Golden Cow Milk|500 மிலி":"heritage-golden-cow.png",
+  "ஹெரிடேஜ் தயிர்|500 கிராம்":"heritage-curd.png",
+  "ஹெரிடேஜ் பனீர்|200 கிராம்":"heritage-paneer.png"
 };
 function draw(){let q=document.getElementById('search').value.toLowerCase(),g=document.getElementById('grid');g.innerHTML='';products.forEach((p,i)=>{if(!p.active)return;if((current==='all'||p.cat===current)&&(!q||(p.name+' '+p.size).toLowerCase().includes(q))){let img=PRODUCT_IMAGES[p.name+'|'+p.size];let photo=img?`<img src="${img}" alt="${p.name}" loading="lazy">`:p.emoji;g.insertAdjacentHTML('beforeend',`<article class="card"><div class="photo">${photo}</div><div class="name">${p.name}</div><div class="size">${p.size}</div><div class="price">₹${p.price}</div><div class="q"><button onclick="change(${i},-1)">−</button><span>${cart[i]||0}</span><button onclick="change(${i},1)">+</button></div></article>`)}})}
 function change(i,d){cart[i]=(cart[i]||0)+d;if(cart[i]<=0)delete cart[i];draw();update()}
