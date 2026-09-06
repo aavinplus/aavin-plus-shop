@@ -143,13 +143,23 @@ const PRODUCT_IMAGES={
   "ஆவின் நெய்|200 கிராம்":"aavin-ghee.png",
   "ஆவின் நெய்|500 கிராம்":"aavin-ghee.png",
   "ஆவின் நெய்|1000 கிராம்":"aavin-ghee.png",
-  "ஹெரிடேஜ் FCM|110 மிலி":"heritage-fcm-110.png",
+  "ஹெரிடேஜ் FCM|110 மிலி":"heritage-fcm-1000.png",
+  "ஹெரிடேஜ் FCM|500 மிலி":"heritage-fcm-1000.png",
   "ஹெரிடேஜ் FCM|1000 மிலி":"heritage-fcm-1000.png",
   "ஹெரிடேஜ் Golden Cow Milk|500 மிலி":"heritage-golden-cow.png",
+  "ஹெரிடேஜ் தயிர்|130 கிராம்":"heritage-curd.png",
   "ஹெரிடேஜ் தயிர்|500 கிராம்":"heritage-curd.png",
-  "ஹெரிடேஜ் பனீர்|200 கிராம்":"heritage-paneer.png"
+  "ஹெரிடேஜ் தயிர்|1000 கிராம்":"heritage-curd.png",
+  "ஹெரிடேஜ் பனீர்|200 கிராம்":"heritage-paneer.png",
+  "ஹெரிடேஜ் பனீர்|200+200 காம்போ":"heritage-paneer.png",
+  "ஹெரிடேஜ் பட்டர்|100 கிராம்":"heritage-butter.png",
+  "ஹெரிடேஜ் மோர்|":"heritage-buttermilk.png",
+  "ஹெரிடேஜ் நெய்|100 கிராம்":"heritage-ghee.png",
+  "ஹெரிடேஜ் நெய்|200 கிராம்":"heritage-ghee.png",
+  "ஹெரிடேஜ் நெய்|500 கிராம்":"heritage-ghee.png",
+  "ஹெரிடேஜ் நெய்|1000 கிராம்":"heritage-ghee.png"
 };
-function draw(){let q=document.getElementById('search').value.toLowerCase(),g=document.getElementById('grid');g.innerHTML='';products.forEach((p,i)=>{if(!p.active)return;if((current==='all'||p.cat===current)&&(!q||(p.name+' '+p.size).toLowerCase().includes(q))){let img=PRODUCT_IMAGES[p.name+'|'+p.size];let photo=img?`<img src="${img}" alt="${p.name}" loading="lazy">`:p.emoji;g.insertAdjacentHTML('beforeend',`<article class="card"><div class="photo">${photo}</div><div class="name">${p.name}</div><div class="size">${p.size}</div><div class="price">₹${p.price}</div><div class="q"><button onclick="change(${i},-1)">−</button><span>${cart[i]||0}</span><button onclick="change(${i},1)">+</button></div></article>`)}})}
+function draw(){let q=document.getElementById('search').value.toLowerCase(),g=document.getElementById('grid');g.innerHTML='';products.forEach((p,i)=>{if(!p.active)return;if((current==='all'||p.cat===current)&&(!q||(p.name+' '+p.size).toLowerCase().includes(q))){let img=PRODUCT_IMAGES[p.name+'|'+p.size];let photo=img?`<img src="${img}" alt="${p.name}" loading="lazy">`:`<div class="no-photo">படம் விரைவில்</div>`;g.insertAdjacentHTML('beforeend',`<article class="card"><div class="photo">${photo}</div><div class="name">${p.name}</div><div class="size">${p.size}</div><div class="price">₹${p.price}</div><div class="q"><button onclick="change(${i},-1)">−</button><span>${cart[i]||0}</span><button onclick="change(${i},1)">+</button></div></article>`)}})}
 function change(i,d){cart[i]=(cart[i]||0)+d;if(cart[i]<=0)delete cart[i];draw();update()}
 function update(){let c=0,t=0;Object.keys(cart).forEach(i=>{c+=cart[i];t+=cart[i]*products[i].price});document.getElementById('count').textContent=c;document.getElementById('total').textContent=t}
 function setCat(x,b){current=x;document.querySelectorAll('.chips button').forEach(v=>v.classList.remove('on'));b.classList.add('on');draw()}
