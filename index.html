@@ -1,7 +1,7 @@
 <!doctype html><html lang="ta"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#087a3d"><link rel="manifest" href="manifest.json">
-<title>Aavin Plus • V6.3</title><style>
+<title>Aavin Plus • V6.4</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Tamil",sans-serif;background:#f4f7f4;color:#173122}
 header{background:linear-gradient(135deg,#087a3d,#11a95a);color:#fff;padding:18px 15px;border-radius:0 0 25px 25px}
 .wrap{max-width:1100px;margin:auto}.brand{display:flex;align-items:center;gap:12px}.logo{width:54px;height:54px;background:#fff;border-radius:16px;display:grid;place-items:center;font-size:31px}h1{margin:0;font-size:26px}.tag{font-size:13px;margin-top:3px}.search{width:100%;margin-top:15px;border:0;border-radius:14px;padding:13px;font-size:16px}
@@ -16,7 +16,7 @@ header{background:linear-gradient(135deg,#087a3d,#11a95a);color:#fff;padding:18p
 <input id="search" class="search" placeholder="🔎 பொருளை தேடுங்கள்..."></div></header>
 <div id="shop" class="wrap"><div class="chips"><button class="on" onclick="setCat('all',this)">அனைத்தும்</button><button onclick="setCat('aavin',this)">🥛 Aavin</button><button onclick="setCat('heritage',this)">🐄 Heritage</button></div>
 <div class="banner"><b>🎉 Aavin Plus Special</b><br>உங்களுக்கு பிடித்த பால் பொருட்களை வீட்டிற்கே ஆர்டர் செய்யுங்கள்!</div>
-<div class="info">📍 <b>Aavin Plus</b> • CSI சர்ச் எதிரில், மல்லாங்கிணறு<br>🚚 Home Delivery • 📲 WhatsApp: <b>8110044400</b></div>
+<div class="info">📍 <b>Aavin Plus</b> • CSI சர்ச் எதிரில், மல்லாங்கிணறு<br>🚚 Home Delivery • 📲 WhatsApp: <b>8110044400</b><br><button class="tab" style="margin-top:8px" onclick="openAdmin()">🔐 Admin</button></div>
 <div id="grid" class="grid"></div></div>
 <div class="cart">🛒 <span><b id="count">0</b> பொருட்கள் • ₹<b id="total">0</b></span><button onclick="openCart()">Cart →</button></div>
 <div id="modal" class="modal" onclick="if(event.target===this)closeCart()"><div class="sheet"><h2>🛒 Cart</h2><div id="items"></div><h3>மொத்தம்: ₹<span id="ctotal">0</span></h3>
@@ -24,14 +24,14 @@ header{background:linear-gradient(135deg,#087a3d,#11a95a);color:#fff;padding:18p
 <button class="order" onclick="goToConfirmation()">அடுத்தது → Order Confirmation</button></div></div>
 <div id="confirmModal" class="modal" onclick="if(event.target===this)closeConfirmation()"><div class="sheet"><h2>✅ Order Confirmation</h2><div id="confirmDetails"></div><button class="order" onclick="sendToWhatsApp()">WhatsApp-க்கு Order அனுப்புங்கள் 📲</button><button class="order" style="background:#e9f1eb;color:#087a3d;margin-top:8px" onclick="backToCart()">← Cart-க்கு திரும்பவும்</button></div></div>
 
-<section id="admin" class="admin wrap"><div id="loginBox" class="login"><h2>🔐 Aavin Plus Admin</h2><p>Admin password உள்ளிடவும்.</p><input id="pw" type="password" class="field" placeholder="Password"><button class="order" onclick="login()">Login</button></div>
+<section id="admin" class="admin wrap"><div id="loginBox" class="login"><h2>🔐 Aavin Plus Admin</h2><p>Admin Email + Password</p><input id="adminEmail" class="field" type="email" value="aavinplus@gmail.com" placeholder="Email"><input id="pw" type="password" class="field" placeholder="Password"><button class="order" onclick="login()">Login</button><button class="order" style="background:#e9f1eb;color:#087a3d;margin-top:8px" onclick="closeAdmin()">← Shop-க்கு திரும்பவும்</button></div>
 <div id="dash" style="display:none"><div class="adminbar"><button class="tab on" onclick="showAdmin('orders')">📦 Orders</button><button class="tab" onclick="showAdmin('products')">🥛 Products</button><button class="tab" onclick="logout()">Logout</button></div>
 <div id="ordersPanel" class="panel"><h2>📦 Orders</h2><div id="orders"></div></div>
-<div id="productsPanel" class="panel" style="display:none"><h2>🥛 Product Management</h2><p>Price/availability மாற்றி <b>Save</b> செய்யலாம். இந்த V6 prototype-ல் மாற்றங்கள் இந்த browser-ல் சேமிக்கப்படும்.</p><div id="productsEdit"></div><button class="order" onclick="saveProducts()">Save Products</button></div></div></section>
+<div id="productsPanel" class="panel" style="display:none"><h2>🥛 Product Management</h2><p>Price/availability மாற்றி <b>Save</b> செய்யலாம். Product settings இந்த browser-ல் சேமிக்கப்படும்.</p><div id="productsEdit"></div><button class="order" onclick="saveProducts()">Save Products</button></div></div></section>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import { getAuth, signInAnonymously, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyCuIVuy4oRvg4L2SWWMQS1uOSdmHy5ZO1w",
   authDomain: "aavin-plus-shop.firebaseapp.com",
@@ -61,6 +61,23 @@ window.firebaseSaveOrder = async function(order) {
   });
   return ref.id;
 };
+window.firebaseAdminLogin = async function(email,password){
+  return signInWithEmailAndPassword(auth,email,password);
+};
+window.firebaseAdminLogout = async function(){ return signOut(auth); };
+window.firebaseLoadOrders = async function(){
+  const snap = await getDocs(collection(db,"orders"));
+  return snap.docs.map(d=>({firestoreId:d.id,...d.data()})).sort((a,b)=>{
+    const ta=a.createdAt?.toMillis?a.createdAt.toMillis():0;
+    const tb=b.createdAt?.toMillis?b.createdAt.toMillis():0;
+    return tb-ta;
+  });
+};
+window.firebaseUpdateOrderStatus = async function(id,status){
+  await updateDoc(doc(db,"orders",id),{status});
+};
+window.firebaseAuth = auth;
+onAuthStateChanged(auth,user=>{ firebaseUser=user; });
 </script>
 <script>
 const DEFAULT_PRODUCTS=[{"cat":"aavin","name":"ஆவின் டிலைட்","size":"200 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டிலைட்","size":"500 மிலி","price":22,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் கோல்டு","size":"500 மிலி","price":28,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"500 மிலி","price":34,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"1000 மிலி","price":68,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"140 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"500 கிராம்","price":35,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"100 கிராம்","price":85,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"200 கிராம்","price":160,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"500 கிராம்","price":365,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"1000 கிராம்","price":700,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"110 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"500 மிலி","price":39,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"1000 மிலி","price":77,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் Golden Cow Milk","size":"500 மிலி","price":26,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"130 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"500 கிராம்","price":38,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"1000 கிராம்","price":80,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200+200 காம்போ","price":190,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பட்டர்","size":"100 கிராம்","price":65,"emoji":"🧈","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் மோர்","size":"","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"100 கிராம்","price":100,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"200 கிராம்","price":190,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"500 கிராம்","price":440,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"1000 கிராம்","price":880,"emoji":"🫙","active":true}];let products=JSON.parse(localStorage.getItem('aavin_products_v6')||'null')||DEFAULT_PRODUCTS;
@@ -94,13 +111,40 @@ async function sendToWhatsApp(){
     alert('Order database-ல் சேமிக்கப்படவில்லை. Firebase Rules/Internet-ஐ சரிபார்த்து மீண்டும் முயற்சிக்கவும்.');
   }
 }
-function login(){if(pw.value==='1234'){loginBox.style.display='none';dash.style.display='block';renderOrders();renderProducts()}else alert('Password தவறு')}
-function logout(){dash.style.display='none';loginBox.style.display='block';pw.value=''}
-function showAdmin(x){ordersPanel.style.display=x==='orders'?'block':'none';productsPanel.style.display=x==='products'?'block':'none'}
-function renderOrders(){let o=JSON.parse(localStorage.getItem('aavin_orders_v6')||'[]');orders.innerHTML=o.length?o.map((x,i)=>`<div class="panel"><b>${x.id}</b> • ${x.time}<br>👤 ${x.customer} • ${x.phone}<br>📍 ${x.address}<br><pre style="white-space:pre-wrap">${x.items}</pre><b>₹${x.total}</b><br><select class="status" onchange="setStatus(${i},this.value)"><option ${x.status==='New'?'selected':''}>New</option><option ${x.status==='Preparing'?'selected':''}>Preparing</option><option ${x.status==='Out for Delivery'?'selected':''}>Out for Delivery</option><option ${x.status==='Delivered'?'selected':''}>Delivered</option></select></div>`).join(''):'<p>இன்னும் orders இல்லை.</p>'}
-function setStatus(i,s){let o=JSON.parse(localStorage.getItem('aavin_orders_v6')||'[]');o[i].status=s;localStorage.setItem('aavin_orders_v6',JSON.stringify(o));renderOrders()}
+async function login(){
+  const email=document.getElementById('adminEmail').value.trim();
+  const password=document.getElementById('pw').value;
+  if(!email||!password)return alert('Email மற்றும் Password உள்ளிடவும்');
+  try{
+    await window.firebaseAdminLogin(email,password);
+    if(email.toLowerCase()!=='aavinplus@gmail.com'){ await window.firebaseAdminLogout(); return alert('இந்த account-க்கு Admin access இல்லை.'); }
+    loginBox.style.display='none';dash.style.display='block';showAdmin('orders');await renderCloudOrders();renderProducts();
+  }catch(err){
+    console.error(err);
+    alert('Login தோல்வி. Email / Password சரிபார்க்கவும்.');
+  }
+}
+async function logout(){try{await window.firebaseAdminLogout();}catch(e){}dash.style.display='none';loginBox.style.display='block';pw.value='';admin.style.display='none';shop.style.display='block';}
+function openAdmin(){shop.style.display='none';admin.style.display='block';window.scrollTo(0,0);}
+function closeAdmin(){admin.style.display='none';shop.style.display='block';window.scrollTo(0,0);}
+function showAdmin(x){ordersPanel.style.display=x==='orders'?'block':'none';productsPanel.style.display=x==='products'?'block':'none';if(x==='orders')renderCloudOrders()}
+async function renderCloudOrders(){
+  const box=document.getElementById('orders');
+  box.innerHTML='<p>☁️ Firebase orders ஏற்றப்படுகிறது...</p>';
+  try{
+    const list=await window.firebaseLoadOrders();
+    box.innerHTML=list.length?list.map(x=>{
+      const dt=x.createdAt?.toDate?x.createdAt.toDate().toLocaleString('en-IN'):'Pending';
+      const safeId=x.firestoreId.replace(/[^a-zA-Z0-9_-]/g,'');
+      return `<div class="panel"><b>${x.orderId||safeId}</b> • ${dt}<br>👤 ${x.customer||''} • ${x.phone||''}<br>📍 ${x.address||''}<br><pre style="white-space:pre-wrap">${x.items||''}</pre><b>₹${x.total||0}</b><br><select class="status" onchange="setCloudStatus('${safeId}',this.value)"><option ${x.status==='New'?'selected':''}>New</option><option ${x.status==='Preparing'?'selected':''}>Preparing</option><option ${x.status==='Out for Delivery'?'selected':''}>Out for Delivery</option><option ${x.status==='Delivered'?'selected':''}>Delivered</option></select></div>`;
+    }).join(''):'<p>☁️ Firebase-ல் orders இல்லை.</p>';
+  }catch(err){console.error(err);box.innerHTML='<p>❌ Firebase orders load ஆகவில்லை. Firestore Rules மற்றும் Admin login-ஐ சரிபார்க்கவும்.</p>';}
+}
+async function setCloudStatus(id,status){try{await window.firebaseUpdateOrderStatus(id,status);await renderCloudOrders();}catch(err){console.error(err);alert('Status update தோல்வி.');}}
+function renderOrders(){renderCloudOrders()}
+function setStatus(){renderCloudOrders()}
 function renderProducts(){productsEdit.innerHTML=products.map((p,i)=>`<div class="productedit"><span>${p.name}<small><br>${p.size}</small></span><input class="mini" type="number" id="pr${i}" value="${p.price}"><label><input type="checkbox" id="ac${i}" ${p.active?'checked':''}> ON</label><button onclick="changePrice(${i})">Set</button></div>`).join('')}
 function changePrice(i){products[i].price=Number(document.getElementById('pr'+i).value);alert('Price changed. Save Products அழுத்துங்கள்.')}
-function saveProducts(){products.forEach((p,i)=>{p.price=Number(document.getElementById('pr'+i).value);p.active=document.getElementById('ac'+i).checked});localStorage.setItem('aavin_products_v6',JSON.stringify(products));draw();alert('Products saved');}
+function saveProducts(){products.forEach((p,i)=>{p.price=Number(document.getElementById('pr'+i).value);p.active=document.getElementById('ac'+i).checked});localStorage.setItem('aavin_products_v6',JSON.stringify(products));draw();alert('Products saved')}
 document.getElementById('search').addEventListener('input',draw);draw();update();
 </script></body></html>
