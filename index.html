@@ -32,8 +32,8 @@ header:before{content:"";position:absolute;width:220px;height:220px;border-radiu
 :root{--green:#0967c7;--green2:#1aa7ff;--deep:#07366e;--mint:#f0f8ff;--cream:#fff5fb;--gold:#ffbf35;--ink:#102a43;--muted:#60758a;--line:#dbe8f5;--pink:#f72585;--pink2:#ff4fa3}
 body{background:linear-gradient(180deg,#f7fbff 0%,#eef6ff 58%,#fff5fb 100%)}
 header{background:radial-gradient(circle at 88% 10%,#ff4fa3 0 3%,transparent 18%),linear-gradient(135deg,#07366e,#0967c7 50%,#27b5ff);box-shadow:0 12px 35px #1261a833}
-.brand-logo{width:58px!important;height:58px!important;object-fit:contain!important;background:#fff;border-radius:16px;padding:5px;box-shadow:0 6px 18px #002b5b30}
-.hero-logo{width:125px!important;height:125px!important;object-fit:contain!important;background:#ffffffdd;border-radius:24px;padding:8px;box-shadow:0 10px 30px #003b6a35}
+.brand-logo{width:66px!important;height:58px!important;object-fit:contain!important;background:transparent;border-radius:0;padding:0;box-shadow:none}
+.hero-logo{width:140px!important;height:120px!important;object-fit:contain!important;background:transparent;border-radius:0;padding:0;box-shadow:none}
 .search{border:2px solid #ffffff;background:#fff;color:#17324d;box-shadow:0 8px 25px #07366e22}
 .chips button{border:1px solid #d7e6f7;background:#fff;color:#1261a8}
 .chips button.on{background:linear-gradient(135deg,#0967c7,#168de5)!important;color:#fff!important;border-color:#0967c7!important;box-shadow:0 8px 20px #0967c733}
@@ -53,7 +53,7 @@ header{background:radial-gradient(circle at 88% 10%,#ff4fa3 0 3%,transparent 18%
 .order{background:linear-gradient(90deg,#0967c7,#f72585)!important}
 .admin{border-color:#dbe8f5!important}
 .login h2{color:#0967c7!important}
-@media(max-width:700px){.card .photo{height:175px}.hero-logo{width:90px!important;height:90px!important}.brand-logo{width:50px!important;height:50px!important}}
+@media(max-width:700px){.card .photo{height:175px}.hero-logo{width:100px!important;height:88px!important}.brand-logo{width:58px!important;height:52px!important}}
 </style></head><body>
 <header><div class="wrap"><div class="brand"><div class="logo"><img class="brand-logo" src="aavin-plus-logo.png" alt="Aavin Plus"></div><div><h1>Aavin Plus</h1><div class="tag">Online Shopping • Home Delivery</div></div></div>
 <input id="search" class="search" placeholder="🔎 பொருளை தேடுங்கள்..."></div></header>
@@ -131,20 +131,25 @@ onAuthStateChanged(auth,user=>{ firebaseUser=user; });
 const DEFAULT_PRODUCTS=[{"cat":"aavin","name":"ஆவின் டிலைட்","size":"200 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டிலைட்","size":"500 மிலி","price":22,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் கோல்டு","size":"500 மிலி","price":28,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"500 மிலி","price":34,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"1000 மிலி","price":68,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"140 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"500 கிராம்","price":35,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"100 கிராம்","price":85,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"200 கிராம்","price":160,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"500 கிராம்","price":365,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"1000 கிராம்","price":700,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"110 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"500 மிலி","price":39,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"1000 மிலி","price":77,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் Golden Cow Milk","size":"500 மிலி","price":26,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"130 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"500 கிராம்","price":38,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"1000 கிராம்","price":80,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200+200 காம்போ","price":190,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பட்டர்","size":"100 கிராம்","price":65,"emoji":"🧈","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் மோர்","size":"","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"100 கிராம்","price":100,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"200 கிராம்","price":190,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"500 கிராம்","price":440,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"1000 கிராம்","price":880,"emoji":"🫙","active":true}];let products=JSON.parse(localStorage.getItem('aavin_products_v6')||'null')||DEFAULT_PRODUCTS;
 let cart={},current='all';
 const PRODUCT_IMAGES={
-  "ஆவின் டிலைட்":"aavin-delite.png",
-  "ஆவின் கோல்டு":"aavin-gold.png",
-  "ஆவின் டீமேட்":"aavin-tea-mate.png",
-  "ஆவின் தயிர்":"94112.webp",
-  "ஆவின் பனீர்":"21348.jpg",
-  "ஆவின் நெய்":"10721.jpg",
-  "ஹெரிடேஜ் FCM":"77546.png",
-  "ஹெரிடேஜ் Golden Cow Milk":"77522.png",
-  "ஹெரிடேஜ் தயிர்":"94112.webp",
-  "ஹெரிடேஜ் பனீர்":"21348.jpg",
-  "ஹெரிடேஜ் பட்டர்":"10721.jpg",
-  "ஹெரிடேஜ் நெய்":"10721.jpg"
+  "ஆவின் டிலைட்|200 மிலி":"assets/aavin-delite.png",
+  "ஆவின் டிலைட்|500 மிலி":"assets/aavin-delite.png",
+  "ஆவின் கோல்டு|500 மிலி":"assets/aavin-gold.png",
+  "ஆவின் டீமேட்|500 மிலி":"assets/aavin-tea-mate.png",
+  "ஆவின் டீமேட்|1000 மிலி":"assets/aavin-tea-mate.png",
+  "ஆவின் தயிர்|140 கிராம்":"assets/aavin-curd.png",
+  "ஆவின் தயிர்|500 கிராம்":"assets/aavin-curd.png",
+  "ஆவின் பனீர்|200 கிராம்":"assets/aavin-paneer.png",
+  "ஆவின் நெய்|100 கிராம்":"assets/aavin-ghee.png",
+  "ஆவின் நெய்|200 கிராம்":"assets/aavin-ghee.png",
+  "ஆவின் நெய்|500 கிராம்":"assets/aavin-ghee.png",
+  "ஆவின் நெய்|1000 கிராம்":"assets/aavin-ghee.png",
+  "ஹெரிடேஜ் FCM|110 மிலி":"assets/heritage-fcm-110.png",
+  "ஹெரிடேஜ் FCM|1000 மிலி":"assets/heritage-fcm-1000.png",
+  "ஹெரிடேஜ் Golden Cow Milk|500 மிலி":"assets/heritage-golden-cow.png",
+  "ஹெரிடேஜ் தயிர்|500 கிராம்":"assets/heritage-curd.png",
+  "ஹெரிடேஜ் பனீர்|200 கிராம்":"assets/heritage-paneer.png"
 };
-function draw(){let q=document.getElementById('search').value.toLowerCase(),g=document.getElementById('grid');g.innerHTML='';products.forEach((p,i)=>{if(!p.active)return;if((current==='all'||p.cat===current)&&(!q||(p.name+' '+p.size).toLowerCase().includes(q))){let img=PRODUCT_IMAGES[p.name];let photo=img?`<img src="${img}" alt="${p.name}" loading="lazy">`:p.emoji;g.insertAdjacentHTML('beforeend',`<article class="card"><div class="photo">${photo}</div><div class="name">${p.name}</div><div class="size">${p.size}</div><div class="price">₹${p.price}</div><div class="q"><button onclick="change(${i},-1)">−</button><span>${cart[i]||0}</span><button onclick="change(${i},1)">+</button></div></article>`)}})}
+function draw(){let q=document.getElementById('search').value.toLowerCase(),g=document.getElementById('grid');g.innerHTML='';products.forEach((p,i)=>{if(!p.active)return;if((current==='all'||p.cat===current)&&(!q||(p.name+' '+p.size).toLowerCase().includes(q))){let img=PRODUCT_IMAGES[p.name+'|'+p.size];let photo=img?`<img src="${img}" alt="${p.name}" loading="lazy">`:p.emoji;g.insertAdjacentHTML('beforeend',`<article class="card"><div class="photo">${photo}</div><div class="name">${p.name}</div><div class="size">${p.size}</div><div class="price">₹${p.price}</div><div class="q"><button onclick="change(${i},-1)">−</button><span>${cart[i]||0}</span><button onclick="change(${i},1)">+</button></div></article>`)}})}
 function change(i,d){cart[i]=(cart[i]||0)+d;if(cart[i]<=0)delete cart[i];draw();update()}
 function update(){let c=0,t=0;Object.keys(cart).forEach(i=>{c+=cart[i];t+=cart[i]*products[i].price});document.getElementById('count').textContent=c;document.getElementById('total').textContent=t}
 function setCat(x,b){current=x;document.querySelectorAll('.chips button').forEach(v=>v.classList.remove('on'));b.classList.add('on');draw()}
