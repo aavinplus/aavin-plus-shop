@@ -1,7 +1,7 @@
 <!doctype html><html lang="ta"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#087a3d"><link rel="manifest" href="manifest.json">
-<title>Aavin Plus</title><style>
+<title>Aavin Plus • V6.3</title><style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Tamil",sans-serif;background:#f4f7f4;color:#173122}
 header{background:linear-gradient(135deg,#087a3d,#11a95a);color:#fff;padding:18px 15px;border-radius:0 0 25px 25px}
 .wrap{max-width:1100px;margin:auto}.brand{display:flex;align-items:center;gap:12px}.logo{width:54px;height:54px;background:#fff;border-radius:16px;display:grid;place-items:center;font-size:31px}h1{margin:0;font-size:26px}.tag{font-size:13px;margin-top:3px}.search{width:100%;margin-top:15px;border:0;border-radius:14px;padding:13px;font-size:16px}
@@ -28,6 +28,40 @@ header{background:linear-gradient(135deg,#087a3d,#11a95a);color:#fff;padding:18p
 <div id="dash" style="display:none"><div class="adminbar"><button class="tab on" onclick="showAdmin('orders')">📦 Orders</button><button class="tab" onclick="showAdmin('products')">🥛 Products</button><button class="tab" onclick="logout()">Logout</button></div>
 <div id="ordersPanel" class="panel"><h2>📦 Orders</h2><div id="orders"></div></div>
 <div id="productsPanel" class="panel" style="display:none"><h2>🥛 Product Management</h2><p>Price/availability மாற்றி <b>Save</b> செய்யலாம். இந்த V6 prototype-ல் மாற்றங்கள் இந்த browser-ல் சேமிக்கப்படும்.</p><div id="productsEdit"></div><button class="order" onclick="saveProducts()">Save Products</button></div></div></section>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCuIVuy4oRvg4L2SWWMQS1uOSdmHy5ZO1w",
+  authDomain: "aavin-plus-shop.firebaseapp.com",
+  projectId: "aavin-plus-shop",
+  storageBucket: "aavin-plus-shop.firebasestorage.app",
+  messagingSenderId: "601486385988",
+  appId: "1:601486385988:web:ac8e270baf5c7310a7ad11"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let firebaseUser = null;
+window.firebaseReady = signInAnonymously(auth).then(cred => { firebaseUser = cred.user; return cred.user; });
+window.firebaseSaveOrder = async function(order) {
+  if (!firebaseUser) await window.firebaseReady;
+  const ref = await addDoc(collection(db, "orders"), {
+    orderId: order.id,
+    customer: order.customer,
+    phone: order.phone,
+    address: order.address,
+    items: order.items,
+    total: Number(order.total),
+    status: "New",
+    customerUid: firebaseUser ? firebaseUser.uid : null,
+    createdAt: serverTimestamp(),
+    source: "Aavin Plus Web App"
+  });
+  return ref.id;
+};
+</script>
 <script>
 const DEFAULT_PRODUCTS=[{"cat":"aavin","name":"ஆவின் டிலைட்","size":"200 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டிலைட்","size":"500 மிலி","price":22,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் கோல்டு","size":"500 மிலி","price":28,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"500 மிலி","price":34,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் டீமேட்","size":"1000 மிலி","price":68,"emoji":"🥛","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"140 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் தயிர்","size":"500 கிராம்","price":35,"emoji":"🥣","active":true},{"cat":"aavin","name":"ஆவின் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"100 கிராம்","price":85,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"200 கிராம்","price":160,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"500 கிராம்","price":365,"emoji":"🫙","active":true},{"cat":"aavin","name":"ஆவின் நெய்","size":"1000 கிராம்","price":700,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"110 மிலி","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"500 மிலி","price":39,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் FCM","size":"1000 மிலி","price":77,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் Golden Cow Milk","size":"500 மிலி","price":26,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"130 கிராம்","price":10,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"500 கிராம்","price":38,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் தயிர்","size":"1000 கிராம்","price":80,"emoji":"🥣","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200 கிராம்","price":120,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பனீர்","size":"200+200 காம்போ","price":190,"emoji":"🧀","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் பட்டர்","size":"100 கிராம்","price":65,"emoji":"🧈","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் மோர்","size":"","price":10,"emoji":"🥛","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"100 கிராம்","price":100,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"200 கிராம்","price":190,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"500 கிராம்","price":440,"emoji":"🫙","active":true},{"cat":"heritage","name":"ஹெரிடேஜ் நெய்","size":"1000 கிராம்","price":880,"emoji":"🫙","active":true}];let products=JSON.parse(localStorage.getItem('aavin_products_v6')||'null')||DEFAULT_PRODUCTS;
 let cart={},current='all';
@@ -41,7 +75,25 @@ let pendingOrder=null;
 function goToConfirmation(){if(!Object.keys(cart).length)return alert('முதலில் பொருட்களை Cart-ல் சேர்க்கவும்');let n=document.getElementById('name').value.trim(),ph=document.getElementById('phone').value.trim(),a=document.getElementById('addr').value.trim();if(!n||!ph||!a)return alert('பெயர், மொபைல் எண், முகவரி நிரப்பவும்');let totalNow=Number(total.textContent),lines=Object.keys(cart).map(i=>`${products[i].name} (${products[i].size}) x ${cart[i]} = ₹${products[i].price*cart[i]}`).join('\n');pendingOrder={id:'AP'+Date.now().toString().slice(-6),time:new Date().toLocaleString('en-IN'),customer:n,phone:ph,address:a,items:lines,total:totalNow,status:'New'};confirmDetails.innerHTML=`<div class="panel"><b>Order ID:</b> ${pendingOrder.id}<br><b>👤 வாடிக்கையாளர்:</b> ${n}<br><b>📱 மொபைல்:</b> ${ph}<br><b>📍 முகவரி:</b> ${a}</div><div class="panel"><b>🛒 பொருட்கள்</b><pre style="white-space:pre-wrap">${lines}</pre><h3>மொத்தம்: ₹${totalNow}</h3></div>`;modal.style.display='none';confirmModal.style.display='flex'}
 function closeConfirmation(){confirmModal.style.display='none'}
 function backToCart(){confirmModal.style.display='none';modal.style.display='flex'}
-function sendToWhatsApp(){if(!pendingOrder)return;let orders=JSON.parse(localStorage.getItem('aavin_orders_v6')||'[]');orders.unshift(pendingOrder);localStorage.setItem('aavin_orders_v6',JSON.stringify(orders));let o=pendingOrder,msg=`*Aavin Plus - புதிய Order*\nOrder: ${o.id}\nவாடிக்கையாளர்: ${o.customer}\nமொபைல்: ${o.phone}\nமுகவரி: ${o.address}\n\n${o.items}\n\n*மொத்தம்: ₹${o.total}*`;window.location.href='https://wa.me/918110044400?text='+encodeURIComponent(msg)}
+async function sendToWhatsApp(){
+  if(!pendingOrder)return;
+  let btn=document.querySelector('#confirmModal .order');
+  let original=btn?btn.textContent:'';
+  if(btn){btn.disabled=true;btn.textContent='Order சேமிக்கப்படுகிறது...';}
+  let orders=JSON.parse(localStorage.getItem('aavin_orders_v6')||'[]');
+  orders.unshift(pendingOrder);
+  localStorage.setItem('aavin_orders_v6',JSON.stringify(orders));
+  try{
+    await window.firebaseSaveOrder(pendingOrder);
+    let o=pendingOrder;
+    let msg=`*Aavin Plus - புதிய Order*\nOrder: ${o.id}\nவாடிக்கையாளர்: ${o.customer}\nமொபைல்: ${o.phone}\nமுகவரி: ${o.address}\n\n${o.items}\n\n*மொத்தம்: ₹${o.total}*`;
+    window.location.href='https://wa.me/918110044400?text='+encodeURIComponent(msg);
+  }catch(err){
+    console.error('Firebase order save failed:',err);
+    if(btn){btn.disabled=false;btn.textContent=original||'WhatsApp-க்கு Order அனுப்புங்கள் 📲';}
+    alert('Order database-ல் சேமிக்கப்படவில்லை. Firebase Rules/Internet-ஐ சரிபார்த்து மீண்டும் முயற்சிக்கவும்.');
+  }
+}
 function login(){if(pw.value==='1234'){loginBox.style.display='none';dash.style.display='block';renderOrders();renderProducts()}else alert('Password தவறு')}
 function logout(){dash.style.display='none';loginBox.style.display='block';pw.value=''}
 function showAdmin(x){ordersPanel.style.display=x==='orders'?'block':'none';productsPanel.style.display=x==='products'?'block':'none'}
